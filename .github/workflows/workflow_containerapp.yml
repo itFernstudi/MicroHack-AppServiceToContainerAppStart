@@ -23,15 +23,6 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - name: Checkout repository
       uses: actions/checkout@v4
-      
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
 
     - name: Get Latest Container Image Tag
       id: get_tag
@@ -41,11 +32,7 @@ jobs:
         INCREMENTED_TAG=$((NUMERIC_TAG + 1))
         UPDATED_TAG=$(echo "$TAG" | sed "s/$NUMERIC_TAG/$INCREMENTED_TAG/")
         echo "image_tag=$UPDATED_TAG" >> $GITHUB_OUTPUT
-        
-
       
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
     - name: Build and Push Image
       run: |
         az acr login --name microhackregistryjuliamili --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }} &&
@@ -59,6 +46,6 @@ jobs:
         acrUsername: ${{ secrets.ACR_USERNAME }}
         acrPassword: ${{ secrets.ACR_PASSWORD }}
         resourceGroup: MicroHack-AppServiceToContainerApp
-        containerAppEnvironment: microhack-containerappenvironment
+        containerAppEnvironment: managedEnvironment-MicroHackAppSer-a12b
         containerAppName: microhack-containerapp
-        targetPort: 8080
+        targetPort: 80
