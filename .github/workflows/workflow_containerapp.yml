@@ -47,5 +47,5 @@ jobs:
         acrPassword: ${{ secrets.ACR_PASSWORD }}
         resourceGroup: MicroHack-AppServiceToContainerApp
         containerAppEnvironment: managedEnvironment-MicroHackAppSer-a12b
-        containerAppName: microhack-containerapp
+        containerAppName: microhack-containerappjuliamili
         targetPort: 80
